@@ -1,0 +1,29 @@
+name: Node Build
+run-name: Build nodejs app
+on: [push]
+jobs:
+  build:
+    runs-on: [self-hosted]
+    steps:
+      - name: Descargar el repo
+        uses: actions/checkout@v4
+      - name: Configurar Nodejs
+        uses: actions/setup-node@v4
+        with:
+          node-version: "22.x"
+      - name: Instalar dependencias
+        working-directory: ./calculator
+        run: |
+          npm ci
+      - name: Ejecución de lint
+        working-directory: ./calculator
+        run: |
+          npm run lint
+      - name: Ejecución de tests
+        working-directory: ./calculator
+        run: |
+          npm run test
+      - name: Compilación
+        working-directory: ./calculator
+        run: |
+          npm run build
